@@ -1,0 +1,82 @@
+{
+    "vehicle_locations": [
+      [
+        0,
+        0
+      ],
+    ],
+    "vehicle_ids": [
+      "veh-1",
+      "veh-2"
+    ],
+    "capacities": [
+      [
+        2,
+        2
+      ],
+
+    ],
+    "vehicle_time_windows": [
+      [
+        0,
+        10
+      ],
+    ],
+    "vehicle_break_time_windows": [
+      [
+        [
+          0,
+          0
+        ],
+
+      ]
+    ],
+    "vehicle_break_durations": [
+      [
+        0,
+        0
+      ]
+    ],
+    "vehicle_break_locations": [
+      0,
+      0
+    ],
+    "vehicle_types": [
+      1
+    ],
+    "vehicle_order_match": [
+      {
+        "order_ids": [
+          0
+        ],
+        "vehicle_id": 0
+      },
+      {
+        "order_ids": [
+          1
+        ],
+        "vehicle_id": 1
+      }
+    ],
+    "skip_first_trips": [
+      true,
+      false
+    ],
+    "drop_return_trips": [
+      true,
+      false
+    ],
+    "min_vehicles": 2,
+    "vehicle_max_costs": [
+      7,
+      10
+    ],
+    "vehicle_max_times": [
+      7,
+      10
+    ],
+    "vehicle_fixed_costs": [
+      15,
+      5
+    ]
+  }
