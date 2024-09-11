@@ -1,16 +1,15 @@
 import json
 import ConvertDataFormat
 import OR
-graph_file_location="preprocess_data/weighted_graph.json"
-orders_file_location="preprocess_data/orders_dataset.json"
+graph_file_location= "og_data/waypoint_graph.json"
+orders_file_location= "og_data/orders_data.json"
+vehicle_file_location="og_data/vehicle_data.json"
 
 def main():
-    graphData=ConvertDataFormat.loadFile(graph_file_location)
-    offsets,edges,weights=ConvertDataFormat.convertGraphToCSR(graphData)
+    ##preprocess
+    offsets,edges,weights=ConvertDataFormat.preprocess(graph_file_location,orders_file_location)
 
-    ordersData=ConvertDataFormat.loadFile(orders_file_location)
-    orders=ConvertDataFormat.convertOrdersData(ordersData)
-
+    ##
     costmatrix=ConvertDataFormat.generateCostMatrix(offsets,edges,weights)
 
 

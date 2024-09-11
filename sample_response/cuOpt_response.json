@@ -1,0 +1,33 @@
+{
+    'response':
+    {
+        'solver_response':
+        {
+            'status': 0,
+            'num_vehicles': 2,
+            'solution_cost': 25.0,
+            'vehicle_data': {
+                'Van-A': {
+                    'task_id': ['Depot', '0', 'Break', '4', 'Depot'],
+                    'arrival_stamp': [6.0, 7.0, 20.0, 21.0, 29.0],
+                    'route': [0, 1, 0, 2, 4, 5, 6, 8, 8, 6, 5, 9, 0],
+                    'type': ['Depot', 'Delivery', 'w', 'w', 'w', 'w', 'w', 'Break', 'Delivery', 'w', 'w', 'w', 'Depot']
+                },
+                'Van-B': {
+                'task_id': ['1', '2', 'Break', '3'],
+                'arrival_stamp': [8.0, 12.0, 20.0, 24.0],
+                'route': [3, 4, 4, 5, 6],
+                'type': ['Delivery', 'Delivery', 'Break', 'w', 'Delivery']
+                }
+            },
+            'dropped_tasks': {
+              'task_id': [],
+              'task_index': []
+            },
+            'msg': ''
+        }
+    },
+    'reqId': '9a3def46-da80-420c-a84e-68b4ec586c41'
+}
+
+
