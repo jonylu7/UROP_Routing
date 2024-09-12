@@ -31,8 +31,17 @@ def generateCostMatrix(offsets,edges,weights):
     return costmatrix
 
 
+def calculateDistance(location1,location2):
+    return((location1[0]-location2[0])**2+(location1[1]-location2[1])**2+(location1[2]-location2[2])**2)**0.5
+
 def calculateGraphWeight(graphfile):
-    return
+    weights=[]
+    for startnode in graphfile["graph"]:
+        for endnode in graphfile["graph"][startnode]:
+            startlocation=graphfile["node_locations"]][int(startnode)]
+            endlocation=graphfile["node_locations"]][int(endnode)]
+            weights.append(calculateDistance(startlocation,endlocation))
+    return weights
 
 
 def convertOrdersData(ordersdata):
@@ -51,7 +60,7 @@ def preprocess(graphfilelocation,ordersfilelocation):
 
 
     ordersLocation = loadFile(ordersfilelocation)
-    orders = convertOrdersData(ordersLocation,)
+    ##orders = convertOrdersData(ordersLocation,)
 
     return offsets, edges, weights
 
