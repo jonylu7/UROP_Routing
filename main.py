@@ -1,20 +1,22 @@
 import json
 import ConvertDataFormat
 import OR
+import ORExport
 graph_file_location= "og_data/waypoint_graph.json"
 orders_file_location= "og_data/orders_data.json"
 vehicle_file_location="og_data/vehicle_data.json"
 
 def main():
     ##preprocess
-    offsets,edges,weights=ConvertDataFormat.preprocess(graph_file_location,orders_file_location)
+    offsets,edges,weights,orders=ConvertDataFormat.preprocess(graph_file_location,orders_file_location)
 
-    ##
-    costmatrix=ConvertDataFormat.generateCostMatrix(offsets,edges,weights)
+    costmatrix,pathmatrix=ConvertDataFormat.generateMatrix(offsets,edges,weights)
 
 
-    solution=OR.solveTSP(costmatrix,orders)
+    solution,totalCost=OR.solveTSP(costmatrix,orders)
+    solutionPath=OR.generateSolutionPath(pathmatrix,solution)
     print(solution)
+    ORExport.exportFormat(solutionPath,totalCost)
     ##costmatrix as argument
 
 

@@ -8,6 +8,7 @@ def initDist(graph):
 
 def dijkstra(graph, start):
     path = {}
+
     shortestdist = initDist(graph)
 
     shortestdist[start] = 0
@@ -28,12 +29,22 @@ def saveAllAsJSON(start, destination, shortestPath, distance):
 
 def getRouteToDest(dijpath, destination):
     path = []
-    while destination in pred:
+    while destination in dijpath:
         path.append(target)
         target = dijpath[target]
     path.append(target)
     path.reverse()
     return path
+
+
+def convertFromDijPathToRow(dijpath,rownum):
+    row=[[]]*rownum
+    for i in range(len(dijpath)):
+        shortestpath=getShortestPath(dijpath,i)
+        source=shortestpath[0]
+        row.insert(source,getShortestPath(dijpath,i))
+    return row
+
 
 def convertFromShortestDistToNpArray(shortestdist):
     dist=[]
@@ -41,24 +52,31 @@ def convertFromShortestDistToNpArray(shortestdist):
         dist.append(shortestdist[key])
     return np.array(dist)
 
+def getShortestPath(dijpath, target):
+    path = []
+    while target in dijpath:
+        path.append(target)
+        target = dijpath[target]
+    path.append(target)
+    path.reverse()
+    return path
 
 
 def findAllShortestPath(graph):
     costmatrix=[]
+    pathmatrix=[]
     for start in graph:
         ## traverse every node in graph and get every shortestpath from every node
         shortestdist, dijpath=dijkstra(graph,start)
         row=convertFromShortestDistToNpArray(shortestdist)
+        pathrow=convertFromDijPathToRow(dijpath,len(graph))
         if(len(costmatrix)==0):
             costmatrix=row
         else:
             costmatrix=np.vstack((costmatrix,row))
-        ##pathmatrix=np.vstack()
+        pathmatrix.append(pathrow)
 
-    ## save as json
-    ##return
-
-    return costmatrix
+    return costmatrix,pathmatrix
 
 
 def calculateOffsetRange(offsetindex,offsets):

@@ -24,11 +24,11 @@ def convertGraphFileToCSR(graphfile):
     offsets.append(cur_offset)
     return np.array(offsets), np.array(edges)
 
-def generateCostMatrix(offsets,edges,weights):
+def generateMatrix(offsets,edges,weights):
     graph=FindPath.convertFromCSRToDijGraph(offsets,edges,weights)
 
-    costmatrix=FindPath.findAllShortestPath(graph)
-    return costmatrix
+    costmatrix,pathmatrix=FindPath.findAllShortestPath(graph)
+    return costmatrix,pathmatrix
 
 
 def calculateDistance(location1,location2):
@@ -37,15 +37,24 @@ def calculateDistance(location1,location2):
 def calculateGraphWeight(graphfile):
     weights=[]
     for startnode in graphfile["graph"]:
-        for endnode in graphfile["graph"][startnode]:
-            startlocation=graphfile["node_locations"]][int(startnode)]
-            endlocation=graphfile["node_locations"]][int(endnode)]
+        for endnode in graphfile["graph"][startnode]["edges"]:
+            startlocation=graphfile["node_locations"][int(startnode)]
+            endlocation=graphfile["node_locations"][int(endnode)]
             weights.append(calculateDistance(startlocation,endlocation))
     return weights
 
+def findOrderRelativeToNodeIndex(orderlocation,graphFile):
+    for index,nodeLocation in enumerate(graphFile["node_locations"]):
+        if(abs(nodeLocation[0]-orderlocation[0])<1 and abs(nodeLocation[1]-orderlocation[1])<1 and abs(nodeLocation[2]-orderlocation[2])<1):
+            return index
 
-def convertOrdersData(ordersdata):
-    return ordersdata["task_locations"]
+
+def convertOrdersData(ordersdata,graphFile):
+    orders=[]
+    for orderlocation in ordersdata["task_locations"]:
+        index=findOrderRelativeToNodeIndex(orderlocation,graphFile)
+        orders.append(index)
+    return orders
 
 
 def convertGraphData(graphfile):
@@ -60,9 +69,11 @@ def preprocess(graphfilelocation,ordersfilelocation):
 
 
     ordersLocation = loadFile(ordersfilelocation)
-    ##orders = convertOrdersData(ordersLocation,)
+    orders = convertOrdersData(ordersLocation,graphFile)
+    ## start from zero
+    orders.insert(0,0)
 
-    return offsets, edges, weights
+    return offsets, edges, weights,orders
 
 
 

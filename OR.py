@@ -1,5 +1,6 @@
 import elkai
 import numpy as np
+import json
 def saveAsJSON():
     return
 
@@ -24,14 +25,24 @@ def solvePrunnedCostMatrix(costMatrix,orders):
     return sol
 
 
-
-
-
 def solveTSP(costMatrix,orders):
     prunnedCostMatrix=prunCostMatrix(costMatrix,orders)
     costMatrixSol=solvePrunnedCostMatrix(prunnedCostMatrix,orders)
-    return costMatrixSol
-    ## path matrix?? estimate distance??
+
+    totalCost=0
+    for i in range(len(costMatrixSol)-1):
+        totalCost+=costMatrix[costMatrixSol[i],costMatrixSol[i+1]]
+    return costMatrixSol,totalCost
+
+
+def generateSolutionPath(pathMatrix,costMatrixSol):
+    solutionPath=[0]
+    for i in range(len(costMatrixSol)-1):
+        solutionPath+=pathMatrix[costMatrixSol[i]][costMatrixSol[i+1]]
+    return solutionPath
+
+
+
 
 
 
