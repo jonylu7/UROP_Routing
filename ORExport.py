@@ -13,12 +13,11 @@ def exportFormat(routes,solutionCost):
                                 "Depot"]}
              }
 
-
     data = {
         "response":{
             "solver_response":{
                 "status": 0,
-                "num_vehicles": 2,
+                "num_vehicles": 3,
                 "solution_cost": solutionCost,
                 "vehicle_data":vehdata,
                 "dropped_tasks": {
@@ -30,11 +29,10 @@ def exportFormat(routes,solutionCost):
         "reqId": "Ass"
     }
     }
-    print(data)
 
     # Serializing json
     json_object = json.dumps(data, indent=2)
 
     # Writing to sample.json
-    with open("response/OR_response.json", "w") as outfile:
+    with open("OR_response.json", "w") as outfile:
         outfile.write(json_object)

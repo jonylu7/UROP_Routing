@@ -15,7 +15,6 @@ def main():
 
     solution,totalCost=OR.solveTSP(costmatrix,orders)
     solutionPath=OR.generateSolutionPath(pathmatrix,solution)
-    print(solution)
     ORExport.exportFormat(solutionPath,totalCost)
     ##costmatrix as argument
 

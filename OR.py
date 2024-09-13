@@ -32,13 +32,17 @@ def solveTSP(costMatrix,orders):
     totalCost=0
     for i in range(len(costMatrixSol)-1):
         totalCost+=costMatrix[costMatrixSol[i],costMatrixSol[i+1]]
+
+    ##convert to int 64
+    val = np.int64(0)
+    totalCost=val.item()
     return costMatrixSol,totalCost
 
 
 def generateSolutionPath(pathMatrix,costMatrixSol):
-    solutionPath=[0]
+    solutionPath=[]
     for i in range(len(costMatrixSol)-1):
-        solutionPath+=pathMatrix[costMatrixSol[i]][costMatrixSol[i+1]]
+        solutionPath+=(pathMatrix[costMatrixSol[i]][costMatrixSol[i+1]])[:-1]
     return solutionPath
 
 

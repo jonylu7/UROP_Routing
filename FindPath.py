@@ -37,14 +37,6 @@ def getRouteToDest(dijpath, destination):
     return path
 
 
-def convertFromDijPathToRow(dijpath,rownum):
-    row=[[]]*rownum
-    for i in range(len(dijpath)):
-        shortestpath=getShortestPath(dijpath,i)
-        source=shortestpath[0]
-        row.insert(source,getShortestPath(dijpath,i))
-    return row
-
 
 def convertFromShortestDistToNpArray(shortestdist):
     dist=[]
@@ -62,19 +54,37 @@ def getShortestPath(dijpath, target):
     return path
 
 
+def putDijPathIntoPathMatrix(dijpath,pathmatrix):
+    for i in range(len(dijpath)):
+        shortestpath = getShortestPath(dijpath, i)
+        shortestpath=list(map(int,shortestpath))
+        source=shortestpath[0]
+        destination=shortestpath[-1]
+        pathmatrix[source][destination]=shortestpath
+    return pathmatrix
+
+def initPathMatrix(matrixsize):
+    pathmatrix=[]
+    for i in range(matrixsize):
+        row=[]
+        for j in range(matrixsize):
+            row.append([])
+        pathmatrix.append(row)
+    return pathmatrix
+
+
 def findAllShortestPath(graph):
     costmatrix=[]
-    pathmatrix=[]
+    pathmatrix=initPathMatrix(len(graph))
     for start in graph:
         ## traverse every node in graph and get every shortestpath from every node
         shortestdist, dijpath=dijkstra(graph,start)
         row=convertFromShortestDistToNpArray(shortestdist)
-        pathrow=convertFromDijPathToRow(dijpath,len(graph))
+        pathmatrix=putDijPathIntoPathMatrix(dijpath,pathmatrix)
         if(len(costmatrix)==0):
             costmatrix=row
         else:
             costmatrix=np.vstack((costmatrix,row))
-        pathmatrix.append(pathrow)
 
     return costmatrix,pathmatrix
 
