@@ -1,5 +1,5 @@
 import json
-def exportFormat(routes,solutionCost):
+def exportFormat(routes,solutionCost,exportlocation):
 
     # Data to be written
     vehdata={"Veh-A":{"task_id": ["Depot", "0", "Break", "4", "Depot"],
@@ -34,5 +34,5 @@ def exportFormat(routes,solutionCost):
     json_object = json.dumps(data, indent=2)
 
     # Writing to sample.json
-    with open("OR_response.json", "w") as outfile:
+    with open(exportlocation, "w") as outfile:
         outfile.write(json_object)

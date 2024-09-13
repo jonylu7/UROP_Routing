@@ -5,6 +5,7 @@ import ORExport
 graph_file_location= "og_data/waypoint_graph.json"
 orders_file_location= "og_data/orders_data.json"
 vehicle_file_location="og_data/vehicle_data.json"
+export_file_location="og_data/OR_response.json"
 
 def main():
     ##preprocess
