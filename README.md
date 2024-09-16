@@ -1,1 +1,1 @@
-Thsi project replace cuOpt with self dev pathfinding algorithm and using warehouse_transport_demo as example
+This project replace cuOpt with self dev pathfinding algorithm and using warehouse_transport_demo as example
