@@ -45,10 +45,9 @@ def addEdgeBetweenNodes(nodeA:int,nodeB:int,graph):
     return graph
 
 
-def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing:float,side:str,incremantal:str,startingKey:int):
+def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing:float,side:str,incremantal:str,startingKey:int,edges):
     ##always start from small
     nodeLocations=[]
-    edges={}
     incremants=1
     if(incremantal=="-"):
         incremants=-1
@@ -74,7 +73,8 @@ def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing
 
         tempVector.y +=remains*incremants
         nodeLocations.append(tempVector.toListWithZ())
-        edges=addEdgeBetweenNodes(tempKey, ++tempKey,edges)
+        edges=addEdgeBetweenNodes(tempKey, tempKey+1,edges)
+        tempKey += 1
         print(nodeLocations)
     elif(side=="x"):
         distance,remains=calculatedDistanceAndRemaingSpacingDistanceBetweenNodes(startVector.x,endVector.x,defaultSpacing)
@@ -106,8 +106,23 @@ def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing
     return nodeLocations,edges
 
 def generateRectangleGraph(lowerLeft:Vector,lowerRight:Vector,topRight:Vector,topLeft:Vector)->WaypointGraph:
-    nodeLocations,edges=generateStraightLineGraph(lowerLeft, lowerRight,defaultSpacing,"x","+",0)
-    rectangleGraph=WaypointGraph(edges,nodeLocations)
+    edges={}
+    #1
+    nodeLocations,edges=generateStraightLineGraph(lowerLeft, lowerRight,defaultSpacing,"x","+",0,edges)
+    #2
+    newNodeLocations, edges = generateStraightLineGraph(lowerRight, topRight, defaultSpacing, "y", "+", len(edges.keys())-1,edges)
+    nodeLocations+=newNodeLocations[1:]
+
+    #3
+    newNodeLocations, edges = generateStraightLineGraph(topRight, topLeft, defaultSpacing, "x", "-",
+                                                        len(edges.keys()) - 1, edges)
+    nodeLocations+=newNodeLocations[1:]
+
+    #4
+    newNodeLocations, edges = generateStraightLineGraph(topLeft, lowerLeft, defaultSpacing, "y", "-",
+                                                        len(edges.keys()) - 1, edges)
+    nodeLocations+=newNodeLocations[1:]
+    rectangleGraph = WaypointGraph(edges, nodeLocations)
     ##oneside,oneside,oneside
     ##merge all of them
     return rectangleGraph
@@ -129,8 +144,8 @@ def convertFromWaypointGraphToJSON(waypoint:WaypointGraph,exportlocation:str):
 def main():
     lowerLeft=Vector(185.99842,-238.98643)
     lowerRight=Vector(254.97656,-238.98643)
-    topRight=lowerLeft
-    topLeft=lowerLeft
+    topRight=Vector(254.97656,-84.89521)
+    topLeft=Vector(185.99842,-84.89521)
     rectangleGraph=generateRectangleGraph(lowerLeft,lowerRight,topRight,topLeft)
     convertFromWaypointGraphToJSON(rectangleGraph,fileLocation)
 
