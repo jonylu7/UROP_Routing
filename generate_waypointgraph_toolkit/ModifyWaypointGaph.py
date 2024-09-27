@@ -25,9 +25,12 @@ def addNewNodeAndConnectToPrevNode(filedata,newnodelocation:Vector,prevnode:int)
     filedata=connectNode(filedata,prevnode,newNodeIndex)
     return filedata
 
-def mergeWaypointGraphs(mergeToFileData,mergeFromFileData):
+def mergeWaypointGraphs(mergetofile,mergefromfile):
 
     return
+
+def duplicateWaypointGraphs(filedata,relocatebottomleft):
+
 
 def main():
     filedata=loadJSONFile(filelocation)

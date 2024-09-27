@@ -1,3 +1,11 @@
+bottomLeft=Vector(204,-252)
+    bottomRight=Vector(224,-252)
+    topRight=Vector(224,-245)
+    topLeft=Vector(204,-245)
+
+
+
+
 filedata=loadFile(filelocation)
     ##connect to source
     filedata=connectNode(filedata,16,0)
