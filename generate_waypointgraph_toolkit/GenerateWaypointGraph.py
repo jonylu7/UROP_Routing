@@ -57,8 +57,6 @@ def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing
     elif(intermediateNodeCount<=2):
         nodeLocations,edges=useMiddlePointAsIntermediateNode(tempVector,side,distance,nodeLocations,edges,tempKey)
 
-    print(nodeLocations)
-
     return nodeLocations,edges
 
 def addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,tempKey,intermediateNodeCount):
@@ -121,15 +119,6 @@ def convertFromWaypointGraphToJSON(waypoint:WaypointGraph,exportlocation:str):
         outfile.write(json_object)
 
 
-def loadCoord():
-    commandlocation="R1C1.txt"
-    filedata=loadFile(commandlocation).readlines()
-
-    #for line in filedata:
-        #line.split(" ")
-
-    return bottomLeft,bottomRight,topRight,topLeft
-
 
 def main():
     bottomLeft=Vector(195,-86)
@@ -140,4 +129,5 @@ def main():
     convertFromWaypointGraphToJSON(rectangleGraph,fileLocation)
 
 
-main()
+if __name__=="__main__":
+    main()

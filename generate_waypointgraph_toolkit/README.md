@@ -1,3 +1,9 @@
 
 # CommandType
-Merge <into_file_path> <from_file_path> <output_file_path>
+## Merge
+Merge
+FROM_PATH <>
+
+INTO_PATH <>
+
+SAVE_PATH <>

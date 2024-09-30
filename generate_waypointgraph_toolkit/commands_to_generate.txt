@@ -1,46 +1,56 @@
-GenerateSquare
+GenerateRectangle
 PATH top_path/R1C1.json
 BL 195,-86
 BR 216,-86
 TR 216,-80
 TL 195,-80
-GenerateSquare
+
+GenerateRectangle
 PATH top_path/R1C2.json
 BL 225,-86
 BR 246,-86
 TR 246,-80
-TL 225, -80
-GenerateSquare
+TL 225,-80
+
+GenerateRectangle
 PATH top_path/R2C1.json
 BL 195,-72
 BR 216,-72
 TR 216,-65
 TL 195,-65
-GenerateSquare
+
+GenerateRectangle
 PATH top_path/R2C2.json
 BL 225,-72
 BR 246,-72
 TR 246,-65
-TL 225, -65
-GenerateSquare
+TL 225,-65
+
+GenerateRectangle
 PATH top_path/R3C1.json
 BL 195,-61
 BR 216,-61
 TR 216,-54
 TL 195,-54
-GenerateSquare
+
+GenerateRectangle
 PATH top_path/R3C2.json
 BL 225,-61
 BR 246,-61
 TR 246,-54
-TL 225, -54
-GenerateSquare
+TL 225,-54
+
+GenerateRectangle
 PATH top_path/R3C3.json
 BL 254,-61
 BR 276,-61
 TR 276,-54
-TL 254, -54
+TL 254,-54
+
+Merge
+FROM_PATH bottom_path/bottom_waypoint_path.json
+INTO_PATH main_path/main_waypoint_path.json
+SAVE_PATH overall_route.json
 
 
-
-Break
+Quit

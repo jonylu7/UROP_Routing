@@ -40,8 +40,8 @@ def duplicateWaypointGraphs(filedata,relocatebottomleft):
     return
 
 def main():
-    intoFileLocation="main_path/waypoint_graph._modify_1.json"
-    fromFileLocation="bottom_path/waypoint_graph._modify_1.json"
+    intoFileLocation="main_path/bottom_waypoint_path.json"
+    fromFileLocation="bottom_path/bottom_waypoint_path.json"
     saveFileLocation=""
     intoFile=loadJSONFile(intoFileLocation)
     fromFile=loadJSONFile(fromFileLocation)
@@ -51,4 +51,5 @@ def main():
 
 
 
-main()
+if __name__=="__main__":
+    main()
