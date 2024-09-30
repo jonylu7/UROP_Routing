@@ -1,4 +1,4 @@
-from tools import loadFile
+from tools import loadFile,loadJSONFile,saveFile
 from VectorModel import Vector
 from WaypointGraphModel import WaypointGraph
 from GenerateWaypointGraph import generateRectangleGraph,convertFromWaypointGraphToJSON
@@ -28,7 +28,6 @@ def loadVector(line):
     return Vector(x,y)
 
 def generateRectangle(lines,lineIndex):
-    print(lines[lineIndex])
     fileLocation=list(lines[lineIndex].split(" "))[1]
     lineIndex += 1
     bottomLeft=loadVector(lines[lineIndex])
@@ -48,22 +47,21 @@ def generateRectangle(lines,lineIndex):
 
 def merge(lines,lineIndex):
     ##path
-    lineIndex += 1
     fromfileLocation = list(lines[lineIndex].split(" "))[1]
+    lineIndex += 1
 
     ##path
-    lineIndex += 1
     intofileLocation = list(lines[lineIndex].split(" "))[1]
+    lineIndex += 1
 
     ##path
-    lineIndex += 1
     savefileLocation = list(lines[lineIndex].split(" "))[1]
+    lineIndex += 1
+    fromFile=loadJSONFile(fromfileLocation)
+    intoFile=loadJSONFile(intofileLocation)
 
-    fromFile=loadFileJSON(fromfileLocation)
-    intoFile=loadFileJSON(intofileLocation)
 
-
-    filedata=mergeWaypointGraphs(fromFile,intoFile)
+    filedata=mergeWaypointGraphs(intoFile,fromFile)
     saveFile(filedata, "", savefileLocation)
 
 def main():
@@ -74,16 +72,22 @@ def main():
     currentMode=InputMode.Nothing
     lineIndex=0
     while(lineIndex<len(lines)):
+        if (currentMode == InputMode.Nothing):
+            currentMode = loadInputMode(lines[lineIndex])
+            print(lines[lineIndex])
+            lineIndex += 1
+
         if (currentMode == InputMode.GenerateRectangle):
             generateRectangle(lines,lineIndex)
-            lineIndex+=7
+            lineIndex+=6
         elif(currentMode==InputMode.Merge):
             merge(lines,lineIndex)
+            lineIndex+=3
         elif(currentMode==InputMode.Quit):
             exit()
-        if(currentMode==InputMode.Nothing):
-            currentMode=loadInputMode(lines[lineIndex])
-            lineIndex+=1
+
+        #reset every round
+        currentMode = InputMode.Nothing
 
 
 

@@ -52,5 +52,39 @@ FROM_PATH bottom_path/bottom_waypoint_path.json
 INTO_PATH main_path/main_waypoint_path.json
 SAVE_PATH overall_route.json
 
+Merge
+FROM_PATH top_path/R1C1.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
+
+Merge
+FROM_PATH top_path/R1C2.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
+
+Merge
+FROM_PATH top_path/R2C1.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
+
+Merge
+FROM_PATH top_path/R2C2.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
+
+Merge
+FROM_PATH top_path/R3C1.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
+
+Merge
+FROM_PATH top_path/R3C2.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
+
+Merge
+FROM_PATH top_path/R3C3.json
+INTO_PATH overall_route.json
+SAVE_PATH overall_route.json
 
 Quit

@@ -51,17 +51,16 @@ def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing
     distance,remains=calculatedDistanceAndRemaingSpacingDistanceBetweenNodes(startVector.get(side),endVector.get(side),defaultSpacing)
 
     intermediateNodeCount=int(distance//defaultSpacing)
-    if(intermediateNodeCount>2):
+    if(intermediateNodeCount>1):
         nodeLocations,edges=addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,tempKey,intermediateNodeCount)
+    elif(intermediateNodeCount<=1):
+        nodeLocations,edges=useMiddlePointAsIntermediateNode(tempVector,side,distance,incremants,nodeLocations,edges,tempKey)
 
-    elif(intermediateNodeCount<=2):
-        nodeLocations,edges=useMiddlePointAsIntermediateNode(tempVector,side,distance,nodeLocations,edges,tempKey)
-
+    print(nodeLocations)
     return nodeLocations,edges
 
 def addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,tempKey,intermediateNodeCount):
     nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, remains * incremants, nodeLocations)
-
     for i in range(1, intermediateNodeCount + 1, 1):
         nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, defaultSpacing * incremants, nodeLocations)
         edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
@@ -73,12 +72,19 @@ def addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,
     return nodeLocations,edges
 
 
-def useMiddlePointAsIntermediateNode(tempVector, side,distance, nodeLocations,edges,tempKey):
-    incremants = distance / 2
-    nodeLocations == updatetempVectorAndNodeLocations(tempVector, side, incremants, nodeLocations)
+def useMiddlePointAsIntermediateNode(tempVector, side,distance,incremants, nodeLocations,edges,tempKey):
+    spacing = distance / 2
+
+    ##because loading nodes to existing list is [1:]
+    nodeLocations=[[0,0,0]]
+
+    nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, spacing*incremants, nodeLocations)
     edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
     tempKey += 1
+
+    nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, spacing*incremants, nodeLocations)
     edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
+    tempKey += 1
     return nodeLocations,edges
 
 def generateRectangleGraph(bottomLeft:Vector,bottomRight:Vector,topRight:Vector,topLeft:Vector,startIndex:int)->WaypointGraph:
@@ -121,7 +127,7 @@ def convertFromWaypointGraphToJSON(waypoint:WaypointGraph,exportlocation:str):
 
 
 def main():
-    bottomLeft=Vector(195,-86)
+    bottomLeft=Vector(195, -86)
     bottomRight=Vector(216,-86)
     topRight=Vector(216,-80)
     topLeft=Vector(195,-80)
