@@ -51,10 +51,10 @@ def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing
     distance,remains=calculatedDistanceAndRemaingSpacingDistanceBetweenNodes(startVector.get(side),endVector.get(side),defaultSpacing)
 
     intermediateNodeCount=int(distance//defaultSpacing)
-    if(intermediateNodeCount>1):
+    if(intermediateNodeCount>2):
         nodeLocations,edges=addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,tempKey,intermediateNodeCount)
 
-    elif(intermediateNodeCount==1):
+    elif(intermediateNodeCount<=2):
         nodeLocations,edges=useMiddlePointAsIntermediateNode(tempVector,side,distance,nodeLocations,edges,tempKey)
 
     print(nodeLocations)
