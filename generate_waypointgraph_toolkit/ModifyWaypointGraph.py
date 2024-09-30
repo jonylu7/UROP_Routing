@@ -29,18 +29,19 @@ def mergeWaypointGraphs(mergeintofile,mergefromfile):
     startIndex=len(mergeintofile["node_locations"])
     mergeintofile["node_locations"]=mergeintofile["node_locations"]+mergefromfile["node_locations"]
 
-    for key,value in mergefromfile["graph"].items():
+    for i in range(len(mergefromfile["graph"])):
+        value=mergefromfile["graph"][str(i)]
         newEdgeList=[]
         for nodeIndex in value["edges"]:
             newEdgeList.append(nodeIndex+startIndex)
-        mergeintofile["graph"][str(nodeIndex+startIndex)]={"edges":newEdgeList}
+        mergeintofile["graph"][str(i+startIndex)]={"edges":newEdgeList}
     return mergeintofile
 
 def duplicateWaypointGraphs(filedata,relocatebottomleft):
     return
 
 def main():
-    intoFileLocation="main_path/bottom_waypoint_path.json"
+    intoFileLocation="main_path/main_waypoint_path.json"
     fromFileLocation="bottom_path/bottom_waypoint_path.json"
     saveFileLocation=""
     intoFile=loadJSONFile(intoFileLocation)
