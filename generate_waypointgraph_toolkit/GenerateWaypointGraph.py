@@ -28,10 +28,17 @@ def addEdgeBetweenNodes(nodeA:int, nodeB:int, edges):
     return edges
 
 
-def addIntermediateNodes():
+def updatetempVectorAndNodeLocations(tempVector, side, addValue,nodeLocations):
+    tempNewValue = addValue + tempVector.get(side)
+    tempVector.set(side, tempNewValue)
+    nodeLocations.append(tempVector.toListWithZ())
+    return nodeLocations
 
 
 def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing:float,side:str,incremantal:str,startingKey:int,edges):
+    if(side=="x" and side=="y"):
+        logging.error("You have something wrong in your brain, isnt it? cause you keyin wrong infos")
+        return
     ##always start from small
     nodeLocations=[]
     incremants=1
@@ -41,70 +48,39 @@ def generateStraightLineGraph(startVector:Vector,endVector:Vector,defaultSpacing
     if(incremantal=="-"):
         incremants=-1
 
-    if (side == "y"):
-        distance,remains=calculatedDistanceAndRemaingSpacingDistanceBetweenNodes(startVector.y,endVector.y,defaultSpacing)
+    distance,remains=calculatedDistanceAndRemaingSpacingDistanceBetweenNodes(startVector.get(side),endVector.get(side),defaultSpacing)
 
-        intermediateNodeCount=int(distance//defaultSpacing)
-        if(intermediateNodeCount>1):
-            tempVector.y +=remains*incremants
-            nodeLocations.append(tempVector.toListWithZ())
+    intermediateNodeCount=int(distance//defaultSpacing)
+    if(intermediateNodeCount>1):
+        nodeLocations,edges=addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,tempKey,intermediateNodeCount)
 
+    elif(intermediateNodeCount==1):
+        nodeLocations,edges=useMiddlePointAsIntermediateNode(tempVector,side,distance,nodeLocations,edges,tempKey)
 
-            for i in range(1,intermediateNodeCount+1,1):
-                tempVector.y+=defaultSpacing*incremants
-                nodeLocations.append(tempVector.toListWithZ())
-                edges=addEdgeBetweenNodes(tempKey,tempKey+1,edges)
-                tempKey+=1
+    print(nodeLocations)
 
-            tempVector.y +=remains*incremants
-            nodeLocations.append(tempVector.toListWithZ())
-            edges=addEdgeBetweenNodes(tempKey, tempKey+1,edges)
-            tempKey += 1
+    return nodeLocations,edges
 
-        elif(intermediateNodeCount==1):
-            incremants=distance/2
-            tempVector.y+=remains*incremants
-            nodeLocations.append(tempVector.toListWithZ())
+def addIntermediateNodes(tempVector,side,remains,incremants,nodeLocations,edges,tempKey,intermediateNodeCount):
+    nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, remains * incremants, nodeLocations)
 
-            edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
-            tempKey += 1
-            edges = addEdgeBetweenNodes(tempKey, tempKey+1, edges)
+    for i in range(1, intermediateNodeCount + 1, 1):
+        nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, defaultSpacing * incremants, nodeLocations)
+        edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
+        tempKey += 1
 
-        print(nodeLocations)
-    elif(side=="x"):
-        distance,remains=calculatedDistanceAndRemaingSpacingDistanceBetweenNodes(startVector.x,endVector.x,defaultSpacing)
-
-        intermediateNodeCount=int(distance//defaultSpacing)
-        if(intermediateNodeCount>1):
-
-            tempVector.x +=remains*incremants
-            nodeLocations.append(tempVector.toListWithZ())
+    nodeLocations = updatetempVectorAndNodeLocations(tempVector, side, remains * incremants, nodeLocations)
+    edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
+    tempKey += 1
+    return nodeLocations,edges
 
 
-
-            for i in range(1,intermediateNodeCount+1,1):
-                tempVector.x+=defaultSpacing*incremants
-                nodeLocations.append(tempVector.toListWithZ())
-                edges=addEdgeBetweenNodes(tempKey,tempKey+1,edges)
-                tempKey+=1
-
-            tempVector.x +=remains*incremants
-            nodeLocations.append(tempVector.toListWithZ())
-            edges=addEdgeBetweenNodes(tempKey, tempKey+1,edges)
-            tempKey += 1
-        elif(intermediateNodeCount==1):
-            incremants = distance / 2
-            tempVector.y += remains * incremants
-            nodeLocations.append(tempVector.toListWithZ())
-            tempKey = startingKey
-            edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
-            tempKey += 1
-            edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
-
-
-    else:
-        logging.error("You have something wrong in your brain, isnt it? cause you keyin wrong infos")
-
+def useMiddlePointAsIntermediateNode(tempVector, side,distance, nodeLocations,edges,tempKey):
+    incremants = distance / 2
+    nodeLocations == updatetempVectorAndNodeLocations(tempVector, side, incremants, nodeLocations)
+    edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
+    tempKey += 1
+    edges = addEdgeBetweenNodes(tempKey, tempKey + 1, edges)
     return nodeLocations,edges
 
 def generateRectangleGraph(bottomLeft:Vector,bottomRight:Vector,topRight:Vector,topLeft:Vector,startIndex:int)->WaypointGraph:
