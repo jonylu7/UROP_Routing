@@ -41,13 +41,32 @@ def duplicateWaypointGraphs(filedata,relocatebottomleft):
     return
 
 def main():
-    intoFileLocation="main_path/main_waypoint_path.json"
-    fromFileLocation="bottom_path/bottom_waypoint_path.json"
-    saveFileLocation=""
-    intoFile=loadJSONFile(intoFileLocation)
-    fromFile=loadJSONFile(fromFileLocation)
-    newFile=mergeWaypointGraphs(intoFile,fromFile)
-    saveFile(newFile,"_merge_1",saveFileLocation)
+    filedata=loadJSONFile("overall_route.json")
+    filedata = connectNode(filedata, 126,6)
+    filedata = connectNode(filedata, 127,5)
+    filedata = connectNode(filedata, 140,67)
+    filedata = connectNode(filedata, 150,72)
+    filedata = connectNode(filedata, 148,184)
+    filedata = connectNode(filedata, 142,174)
+    filedata = connectNode(filedata, 140,167)
+    filedata = connectNode(filedata, 167,64)
+    filedata = connectNode(filedata, 157,59)
+    filedata = connectNode(filedata, 142,165)
+    filedata = connectNode(filedata, 159,191)
+    filedata = connectNode(filedata, 165,201)
+    filedata = connectNode(filedata, 174,201)
+    filedata = connectNode(filedata, 199,176)
+    filedata = connectNode(filedata, 176,208)
+    filedata = connectNode(filedata, 182,218)
+    filedata = connectNode(filedata, 208,235)
+    filedata = connectNode(filedata, 210,233)
+    filedata = connectNode(filedata, 225,252)
+    filedata = connectNode(filedata, 227,250)
+    filedata = connectNode(filedata, 193, 225)
+    filedata = connectNode(filedata, 119, 235)
+
+
+    saveFile(filedata, "_modify_1", filelocation)
 
 
 
