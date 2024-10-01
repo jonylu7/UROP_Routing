@@ -65,7 +65,6 @@ def main():
     filedata = connectNode(filedata, 193, 225)
     filedata = connectNode(filedata, 119, 235)
 
-
     saveFile(filedata, "_modify_1", filelocation)
 
 
