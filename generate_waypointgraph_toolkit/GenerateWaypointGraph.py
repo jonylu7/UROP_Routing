@@ -113,18 +113,6 @@ def generateRectangleGraph(bottomLeft:Vector,bottomRight:Vector,topRight:Vector,
 
 
 
-def convertFromWaypointGraphToJSON(waypoint:WaypointGraph,exportlocation:str):
-    graphJSON={}
-    for key,value in waypoint.graph.items():
-        graphJSON[str(key)]={"edges":value}
-    data={"node_locations":waypoint.nodeLocations,"graph":graphJSON}
-    json_object = json.dumps(data, indent=2)
-
-    # Writing to sample.json
-    with open(exportlocation, "w") as outfile:
-        outfile.write(json_object)
-
-
 
 def main():
     bottomLeft=Vector(195, -86)
@@ -132,7 +120,7 @@ def main():
     topRight=Vector(216,-80)
     topLeft=Vector(195,-80)
     rectangleGraph=generateRectangleGraph(bottomLeft,bottomRight,topRight,topLeft,startIndex)
-    convertFromWaypointGraphToJSON(rectangleGraph,fileLocation)
+    rectangleGraph.saveAs(fileLocation)
 
 
 if __name__=="__main__":
