@@ -1,9 +1,6 @@
 import elkai
 import numpy as np
 import json
-def saveAsJSON():
-    return
-
 def prunCostMatrix(costMatrix,orders):
     prunnedCostMatrix=[]
     for index,orderx in enumerate(orders):
@@ -13,17 +10,12 @@ def prunCostMatrix(costMatrix,orders):
         prunnedCostMatrix.append(row)
     return np.array(prunnedCostMatrix)
 
-
-
-
 def solvePrunnedCostMatrix(costMatrix,orders):
     tempSol=elkai.DistanceMatrix(costMatrix.tolist()).solve_tsp()
     sol=[]
     for t in tempSol:
         sol.append(orders[t])
-
     return sol
-
 
 def solveTSP(costMatrix,orders):
     prunnedCostMatrix=prunCostMatrix(costMatrix,orders)
@@ -38,12 +30,17 @@ def solveTSP(costMatrix,orders):
     totalCost=val.item()
     return costMatrixSol,totalCost
 
-
-def generateSolutionPath(pathMatrix,costMatrixSol):
+def generateSolution(pathMatrix, costMatrixSol):
     solutionPath=[]
     for i in range(len(costMatrixSol)-1):
         solutionPath+=(pathMatrix[costMatrixSol[i]][costMatrixSol[i+1]])[:-1]
     return solutionPath
+
+def convertWaypointIndexsToLocations(waypointIndexs,nodeLocations):
+    nodeLocations=[]
+    for i in waypointIndexs:
+        nodeLocations.append(nodeLocations[i])
+    return nodeLocations
 
 
 

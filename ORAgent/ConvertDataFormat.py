@@ -2,7 +2,6 @@ import json
 import numpy as np
 import FindPath
 
-
 def loadFile(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)

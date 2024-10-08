@@ -62,9 +62,7 @@ import sys
 
 sys.path.insert(0, '/home/csl/.local/share/ov/pkg/isaac-sim-4.1.0/extscache/omni.cuopt.examples-1.0.0+106.0.0/omni/cuopt/examples/warehouse_transport_demo/ORAgent')
 
-import ClientInit
-ClientInit.initClient()
-import Client
+import ORAgentClient
 #---end modify by Lu---
 
 
